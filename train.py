@@ -65,6 +65,7 @@ def train(args):
         model.load_state_dict(pretrained_modeled)
 
     model.word_emb = utils.load_word_emb(args.glove_embed_path)
+
     # begin train
 
     model_save_path = utils.init_log_checkpoint_path(args)
@@ -77,7 +78,8 @@ def train(args):
                 if args.lr_scheduler:
                     scheduler.step()
                 epoch_begin = time.time()
-                loss = utils.epoch_train(model, optimizer, args.batch_size, sql_data, table_data, args,
+                loss = utils.epoch_train(model, optimizer, args.batch_size, sql_data, table_data,
+                                         args,epoch,args.epoch,
                                    loss_epoch_threshold=args.loss_epoch_threshold,
                                    sketch_loss_coefficient=args.sketch_loss_coefficient)
                 epoch_end = time.time()
